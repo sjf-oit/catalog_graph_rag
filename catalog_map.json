@@ -1,0 +1,460 @@
+{
+  "catalog_year": "2026-2027",
+  "schools": [
+    {
+      "name": "School of Arts and Sciences",
+      "slug": "school-of-arts-and-sciences",
+      "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-arts-and-sciences/",
+      "levels": [
+        {
+          "level": "Undergraduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-arts-and-sciences/",
+          "programs": [
+            {
+              "name": "Actuarial Science",
+              "slug": "actuarial-science",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/actuarial-science/"
+            },
+            {
+              "name": "American Studies",
+              "slug": "american-studies",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/american-studies/"
+            },
+            {
+              "name": "Athletic Performance",
+              "slug": "athletic-performance",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/athletic-performance/"
+            },
+            {
+              "name": "Biochemistry",
+              "slug": "biochemistry",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/biochemistry/"
+            },
+            {
+              "name": "Biology",
+              "slug": "biology",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/biology/"
+            },
+            {
+              "name": "Chemistry",
+              "slug": "chemistry",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/chemistry/"
+            },
+            {
+              "name": "Computer Science",
+              "slug": "computer-science",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/computer-science/"
+            },
+            {
+              "name": "Criminology and Criminal Justice",
+              "slug": "criminology",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/criminology/"
+            },
+            {
+              "name": "Cybersecurity",
+              "slug": "cybersecurity",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/cybersecurity/"
+            },
+            {
+              "name": "Data Analytics",
+              "slug": "data-analytics",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/data-analytics/"
+            },
+            {
+              "name": "Economics",
+              "slug": "economics",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/economics/"
+            },
+            {
+              "name": "English",
+              "slug": "english",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/english/"
+            },
+            {
+              "name": "Film and Television",
+              "slug": "film-and-television",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/film-and-television/"
+            },
+            {
+              "name": "History",
+              "slug": "history",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/history/"
+            },
+            {
+              "name": "Human Services",
+              "slug": "human-services-2",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/human-services-2/"
+            },
+            {
+              "name": "Interdisciplinary Studies",
+              "slug": "interdisciplinary-studies",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/interdisciplinary-studies/"
+            },
+            {
+              "name": "International Studies",
+              "slug": "international-studies",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/international-studies/"
+            },
+            {
+              "name": "Legal Studies",
+              "slug": "legal-studies",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/legal-studies/"
+            },
+            {
+              "name": "Mathematics",
+              "slug": "mathematics",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/mathematics/"
+            },
+            {
+              "name": "Media and Communication",
+              "slug": "media-and-communication",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/media-and-communication/"
+            },
+            {
+              "name": "Neuroscience and Behavior",
+              "slug": "neuroscience-and-behavior",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/neuroscience-and-behavior/"
+            },
+            {
+              "name": "Philosophy",
+              "slug": "philosophy",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/philosophy/"
+            },
+            {
+              "name": "Physics",
+              "slug": "physics",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/physics/"
+            },
+            {
+              "name": "Political Science",
+              "slug": "political-science",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/political-science/"
+            },
+            {
+              "name": "Pre-Health Professions",
+              "slug": "pre-health-professions",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/pre-health-professions/"
+            },
+            {
+              "name": "Psychology",
+              "slug": "psychology",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/psychology/"
+            },
+            {
+              "name": "Public Health",
+              "slug": "public-health",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/public-health/"
+            },
+            {
+              "name": "Public Relations",
+              "slug": "public-relations",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/public-relations/"
+            },
+            {
+              "name": "Religious Studies",
+              "slug": "religious-studies",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/religious-studies/"
+            },
+            {
+              "name": "Sociology and Anthropology",
+              "slug": "sociology-and-anthropology",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/sociology-and-anthropology/"
+            },
+            {
+              "name": "Spanish",
+              "slug": "spanish",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/spanish/"
+            },
+            {
+              "name": "Sport Management",
+              "slug": "sport-management",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/sport-management/"
+            },
+            {
+              "name": "Sustainability",
+              "slug": "sustainability",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/sustainability/"
+            },
+            {
+              "name": "African American Studies (Minor)",
+              "slug": "african-american-studies-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/african-american-studies-minor/"
+            },
+            {
+              "name": "AI Literacy (Minor)",
+              "slug": "ai-literacy-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/ai-literacy-minor/"
+            },
+            {
+              "name": "Arts: Interdisciplinary Arts (Minor)",
+              "slug": "arts-interdisciplinary-arts-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/arts-interdisciplinary-arts-minor/"
+            },
+            {
+              "name": "Creative Writing (Minor)",
+              "slug": "creative-writing-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/creative-writing-minor/"
+            },
+            {
+              "name": "Ethics (Minor)",
+              "slug": "ethics-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/ethics-minor/"
+            },
+            {
+              "name": "Gender & Sexuality Studies (Minor)",
+              "slug": "gender-sexuality-studies-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/gender-sexuality-studies-minor/"
+            },
+            {
+              "name": "Gerontology (Minor)",
+              "slug": "gerontology-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/gerontology-minor/"
+            },
+            {
+              "name": "Global Health (Minor)",
+              "slug": "global-health-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/global-health-minor/"
+            },
+            {
+              "name": "Health Communication (Minor)",
+              "slug": "health-communication-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/health-communication-minor/"
+            },
+            {
+              "name": "Languages and Cultures (Minor)",
+              "slug": "languages-and-cultures-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/languages-and-cultures-minor/"
+            },
+            {
+              "name": "Public and Professional Writing (Cert.)",
+              "slug": "public-and-professional-writing-certificate",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/public-and-professional-writing-certificate/"
+            },
+            {
+              "name": "Spanish/Latino Culture for Health (Minor)",
+              "slug": "spanish-latino-culture-for-the-health-professions",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-arts-and-sciences/spanish-latino-culture-for-the-health-professions/"
+            }
+          ]
+        },
+        {
+          "level": "Graduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/graduate/school-of-arts-and-sciences/",
+          "programs": [
+            {
+              "name": "Mental Health Counseling (M.S.)",
+              "slug": "mental-health-counseling",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/mental-health-counseling/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "School of Business",
+      "slug": "school-of-business",
+      "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-business/",
+      "levels": [
+        {
+          "level": "Undergraduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-business/",
+          "programs": [
+            {
+              "name": "Accounting (B.S.)",
+              "slug": "accounting",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/accounting/"
+            },
+            {
+              "name": "Finance (B.S.)",
+              "slug": "finance",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/finance/"
+            },
+            {
+              "name": "Healthcare Administration (B.S.)",
+              "slug": "healthcare-administration",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/healthcare-administration/"
+            },
+            {
+              "name": "Management (B.S.)",
+              "slug": "management",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/management/"
+            },
+            {
+              "name": "Marketing (B.S.)",
+              "slug": "marketing",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/marketing/"
+            },
+            {
+              "name": "Entrepreneurship and Innovation (Minor)",
+              "slug": "entrepreneurship-and-innovation-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/entrepreneurship-and-innovation-minor/"
+            },
+            {
+              "name": "Professional Sales (Minor)",
+              "slug": "professional-sales-minor",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/professional-sales-minor/"
+            }
+          ]
+        },
+        {
+          "level": "Graduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/graduate/school-of-business/",
+          "programs": [
+            {
+              "name": "Master of Business Administration (MBA)",
+              "slug": "mba",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/mba/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ralph C. Wilson, Jr. School of Education",
+      "slug": "school-of-education",
+      "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-education/",
+      "levels": [
+        {
+          "level": "Undergraduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-education/",
+          "programs": [
+            {
+              "name": "Inclusive Childhood Education (B.S.)",
+              "slug": "inclusive-childhood-education",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-education/inclusive-childhood-education/"
+            },
+            {
+              "name": "Inclusive Adolescence Education (B.S.)",
+              "slug": "inclusive-adolescence-education",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-education/inclusive-adolescence-education/"
+            }
+          ]
+        },
+        {
+          "level": "Graduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/graduate/school-of-education/",
+          "programs": [
+            {
+              "name": "Educational Leadership (M.S.Ed.)",
+              "slug": "educational-leadership",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/educational-leadership/"
+            },
+            {
+              "name": "Inclusive Childhood Education (M.S.)",
+              "slug": "inclusive-childhood-education",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/inclusive-childhood-education/"
+            },
+            {
+              "name": "Inclusive Adolescence Education (M.S.)",
+              "slug": "inclusive-adolescence-education",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/inclusive-adolescence-education/"
+            },
+            {
+              "name": "Inclusive Adolescence Ed. Residency (M.S.)",
+              "slug": "master-of-science-in-education-inclusive-adolescence-education-residency-apprenticeship",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/master-of-science-in-education-inclusive-adolescence-education-residency-apprenticeship/"
+            },
+            {
+              "name": "Literacy Education (M.S.)",
+              "slug": "master-of-science-in-literacy-education-m-s",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/master-of-science-in-literacy-education-m-s/"
+            },
+            {
+              "name": "Library Media (M.S.)",
+              "slug": "master-of-science-in-library-media-m-s",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/master-of-science-in-library-media-m-s/"
+            },
+            {
+              "name": "Executive Leadership (Ed.D.)",
+              "slug": "edd",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-education-graduate/edd/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wegmans School of Nursing",
+      "slug": "school-of-nursing",
+      "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-nursing/",
+      "levels": [
+        {
+          "level": "Undergraduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-nursing/",
+          "programs": [
+            {
+              "name": "Nursing B.S. (Traditional)",
+              "slug": "traditional-nursing",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-nursing/traditional-nursing/"
+            },
+            {
+              "name": "RN to B.S.N. (Online)",
+              "slug": "rn-to-bsn",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/school-of-nursing/rn-to-bsn/"
+            }
+          ]
+        },
+        {
+          "level": "Graduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/graduate/school-of-nursing/",
+          "programs": [
+            {
+              "name": "Nursing (M.S.)",
+              "slug": "nursing",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-nursing-graduate/nursing/"
+            },
+            {
+              "name": "Mental Health Counseling (M.S.)",
+              "slug": "mental-health-counseling",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-nursing-graduate/mental-health-counseling/"
+            },
+            {
+              "name": "DNP Post Masters & Post Baccalaureate",
+              "slug": "dnp",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-nursing-graduate/dnp/"
+            },
+            {
+              "name": "DNP Nurse Anesthesia / AGACNP",
+              "slug": "doctor-of-nursing-practice-in-nurse-anesthesia-and-adult-gerontology-acute-care-nurse-practitioner-agacnp",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/school-of-nursing-graduate/doctor-of-nursing-practice-in-nurse-anesthesia-and-adult-gerontology-acute-care-nurse-practitioner-agacnp/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wegmans School of Pharmacy",
+      "slug": "school-of-pharmacy",
+      "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-pharmacy/",
+      "levels": [
+        {
+          "level": "Undergraduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/undergraduate/school-of-pharmacy/",
+          "programs": [
+            {
+              "name": "Pre-Pharmacy",
+              "slug": "pre-pharmacy",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/undergraduate/pre-pharmacy/"
+            }
+          ]
+        },
+        {
+          "level": "Graduate",
+          "url": "https://catalog.sjf.edu/2026-2027/school/graduate/school-of-pharmacy/",
+          "programs": [
+            {
+              "name": "Doctor of Pharmacy (Pharm.D.)",
+              "slug": "pharmacy",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/pharmacy/"
+            },
+            {
+              "name": "Doctor of Pharmacy / MBA",
+              "slug": "pharmacy-mba",
+              "url": "https://catalog.sjf.edu/2026-2027/programs/graduate/pharmacy-mba/"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

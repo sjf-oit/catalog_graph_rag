@@ -1,0 +1,21 @@
+# Environment & credentials
+.env
+
+# Virtual environment
+.venv/
+venv/
+
+# Large XML catalog files (too big for GitHub)
+*.xml
+*.xml.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Neo4j / data artifacts
+*.db
+
+# OS files
+.DS_Store
