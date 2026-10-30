@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Environment & credentials
 .env
 
@@ -20,7 +19,6 @@ __pycache__/
 
 # OS files
 .DS_Store
-=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -241,4 +239,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
->>>>>>> 33a32833ab47f2270845cc19fdeb7f3a1f0be8e7
