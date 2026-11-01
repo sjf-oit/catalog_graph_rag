@@ -3,11 +3,15 @@
 load_catalog_from_xml.py
 
 Self-contained Neo4j Knowledge Graph Loader for St. John Fisher University Catalogs.
-Directly ingests Courses, Schools, Programs, ProgramTypes, RequirementGroups, and
-Relationships (PREREQUISITE_FOR, REQUIRES_COURSE, HAS_LEVEL, etc.) from WordPress XML.
+Directly ingests:
+  - Courses & Prerequisites (:PREREQUISITE_FOR)
+  - Schools & Levels (:HAS_LEVEL)
+  - Academic Programs & ProgramTypes (:HAS_TYPE)
+  - Concentrations (:HAS_CONCENTRATION)
+  - Requirement Groups (:HAS_REQUIREMENT_GROUP, :REQUIRES_COURSE)
 
 Usage:
-  python load_catalog_from_xml.py                         # Defaults to 2026-2027
+  python load_catalog_from_xml.py                        # Defaults to 2026-2027
   python load_catalog_from_xml.py --year 2025-2026
   python load_catalog_from_xml.py --year 2024-2025
   python load_catalog_from_xml.py --year 2023-2024
@@ -26,9 +30,9 @@ from neo4j import GraphDatabase
 
 # --- Configuration & Credentials ---
 load_dotenv()
-URI  = os.getenv("NEO4J_URI", "neo4j+ssc://a0747a9f.databases.neo4j.io")
+URI = os.getenv("NEO4J_URI", "neo4j+ssc://a0747a9f.databases.neo4j.io")
 USER = os.getenv("NEO4J_USER", "a0747a9f")
-PWD  = os.getenv("NEO4J_PWD", "")
+PWD = os.getenv("NEO4J_PWD", "")
 
 # XML Namespaces
 NS = {
@@ -50,6 +54,7 @@ CANONICAL_SCHOOL_MAP = {
 }
 
 COURSE_CODE_RE = re.compile(r'\b([A-Z]{2,5})[- ]?([0-9]{3,4}[A-Z]?)\b')
+CONCENTRATION_KEYWORDS = re.compile(r'\b(concentration|track|specialization|pathway)\b', re.IGNORECASE)
 
 
 def parse_args():
@@ -134,7 +139,6 @@ def detect_program_type(title, level):
 
     if "minor" in t:
         return "Minor"
-
     if "certificate" in t or "cert." in t:
         return "Certificate"
 
@@ -156,13 +160,14 @@ def detect_program_type(title, level):
 
     if level == "Graduate":
         return "Graduate Degree"
+
     return "Undergraduate Degree"
 
 
-def parse_requirement_html(html_str, prog_url='', default_group_name='Requirements'):
+def parse_requirement_html(html_str, prog_url='', default_group_name='Degree Requirements'):
     """
-    Parses requirement groups and embedded course codes directly from WordPress HTML fields.
-    Returns structured requirement groups with isolated course lists.
+    Parses requirement groups, identifying whether sections represent
+    core degree requirements or specific concentrations/tracks.
     """
     if not html_str:
         return []
@@ -177,19 +182,19 @@ def parse_requirement_html(html_str, prog_url='', default_group_name='Requiremen
         if not text:
             continue
 
-        # Headings define requirement groups/sections
         if el.name in ['h2', 'h3', 'h4']:
             if current_courses:
+                is_con = bool(CONCENTRATION_KEYWORDS.search(current_group_name))
                 groups.append({
                     'name': current_group_name,
                     'program_url': prog_url,
                     'courses': current_courses,
-                    'min_credits': ''
+                    'min_credits': '',
+                    'is_concentration': is_con
                 })
             current_group_name = text
             current_courses = []
         else:
-            # Extract course codes found in paragraph/list items
             matches = COURSE_CODE_RE.findall(text.upper())
             for subj, num in matches:
                 code = normalize_code(f"{subj} {num}")
@@ -201,14 +206,16 @@ def parse_requirement_html(html_str, prog_url='', default_group_name='Requiremen
                     })
 
     if current_courses:
+        is_con = bool(CONCENTRATION_KEYWORDS.search(current_group_name))
         groups.append({
             'name': current_group_name,
             'program_url': prog_url,
             'courses': current_courses,
-            'min_credits': ''
+            'min_credits': '',
+            'is_concentration': is_con
         })
 
-    # Deduplicate codes within the same group
+    # Deduplicate codes within the same section
     for g in groups:
         seen = set()
         deduped = []
@@ -263,8 +270,10 @@ def parse_xml_catalog(filepath, catalog_year):
 
         title_el = item.find('title')
         title = title_el.text.strip() if (title_el is not None and title_el.text) else ""
+
         content_el = item.find('content:encoded', NS)
         content = content_el.text.strip() if (content_el is not None and content_el.text) else ""
+
         link_el = item.find('link')
         link = link_el.text.strip() if (link_el is not None and link_el.text) else ""
 
@@ -273,14 +282,11 @@ def parse_xml_catalog(filepath, catalog_year):
             subj_num = meta.get('Subject_Course_Number', '')
             subj = meta.get('ct_Subject_Co_text_46b1', '')
             num = meta.get('ct_Course_Num_text_be9d', '')
-
             if not subj_num and subj and num:
                 subj_num = f"{subj} {num}"
 
             course_code = normalize_code(subj_num)
             parts = course_code.split()
-
-            # Defensive Check: Require valid alpha prefix and numeric starting digit (skips ghost media/attachments)
             if len(parts) < 2 or not parts[0].isalpha() or not parts[1][0].isdigit():
                 continue
 
@@ -289,7 +295,6 @@ def parse_xml_catalog(filepath, catalog_year):
             prereq_raw = meta.get('ct_Prerequisi_editor_e687', '')
             restrictions = meta.get('ct_Restrictio_editor_4933', '')
             attributes = meta.get('ct_Course_Att_text_888e', '')
-
             prereq_list = parse_prerequisites(prereq_raw)
 
             courses.append({
@@ -324,13 +329,10 @@ def parse_xml_catalog(filepath, catalog_year):
             if not title or title.strip().lower() in skip_program_titles:
                 continue
 
-            # Authoritative level from XML selectbox meta
             level_code = meta.get('ct_College_Co_selectbox_9443', 'UG').strip().upper()
             level = 'Graduate' if level_code == 'GR' else 'Undergraduate'
-
             prog_type = detect_program_type(title, level)
 
-            # Ingest requirement HTML fields directly from XML
             req_html = meta.get('ct_Program_Re_editor_226b', '')
             minor_html = meta.get('ct_Minor_editor_f6ff', '')
 
@@ -350,7 +352,7 @@ def parse_xml_catalog(filepath, catalog_year):
                 'catalog_year': catalog_year
             })
 
-    print(f"  ✅ Extracted {len(courses)} active/inactive courses (ghost attachments excluded)")
+    print(f"  ✅ Extracted {len(courses)} active/inactive courses")
     print(f"  ✅ Extracted {len(schools)} school mappings (resolving to canonical 5 schools)")
     print(f"  ✅ Extracted {len(programs)} academic programs with direct requirement groups")
     return courses, schools, programs
@@ -359,11 +361,11 @@ def parse_xml_catalog(filepath, catalog_year):
 def setup_schema(session):
     """Setup multi-year idempotent constraints and indexes in Neo4j."""
     print("\n🏗️  Setting up Neo4j schema & constraints...")
-    
-    # 1. Drop legacy single-property constraints that block multi-year loading
+
+    # Drop legacy single-property constraints
     legacy_constraints = [
         "program_url_unique",
-        "program_name_unique", 
+        "program_name_unique",
         "course_code_unique",
         "school_name_unique",
         "reqgroup_node_key"
@@ -374,17 +376,18 @@ def setup_schema(session):
         except Exception:
             pass
 
-    # 2. Assert multi-year composite node keys & indexes
+    # Assert multi-year composite node keys & indexes
     queries = [
         "CREATE CONSTRAINT catalog_year_unique IF NOT EXISTS FOR (c:CatalogYear) REQUIRE c.year IS UNIQUE",
-        "CREATE CONSTRAINT level_name_unique   IF NOT EXISTS FOR (l:Level)       REQUIRE l.name IS UNIQUE",
+        "CREATE CONSTRAINT level_name_unique IF NOT EXISTS FOR (l:Level) REQUIRE l.name IS UNIQUE",
         "CREATE CONSTRAINT progtype_name_unique IF NOT EXISTS FOR (pt:ProgramType) REQUIRE pt.name IS UNIQUE",
-        "CREATE CONSTRAINT school_node_key     IF NOT EXISTS FOR (s:School)      REQUIRE (s.name, s.catalog_year) IS NODE KEY",
-        "CREATE CONSTRAINT course_node_key     IF NOT EXISTS FOR (c:Course)      REQUIRE (c.code, c.catalog_year) IS NODE KEY",
-        "CREATE CONSTRAINT program_url_key     IF NOT EXISTS FOR (p:Program)     REQUIRE (p.url, p.catalog_year) IS NODE KEY",
-        "CREATE CONSTRAINT req_group_key       IF NOT EXISTS FOR (r:RequirementGroup) REQUIRE (r.name, r.program_url, r.catalog_year) IS NODE KEY",
-        "CREATE INDEX course_title_idx         IF NOT EXISTS FOR (c:Course)      ON (c.title)",
-        "CREATE INDEX program_name_idx         IF NOT EXISTS FOR (p:Program)     ON (p.name)"
+        "CREATE CONSTRAINT school_node_key IF NOT EXISTS FOR (s:School) REQUIRE (s.name, s.catalog_year) IS NODE KEY",
+        "CREATE CONSTRAINT course_node_key IF NOT EXISTS FOR (c:Course) REQUIRE (c.code, c.catalog_year) IS NODE KEY",
+        "CREATE CONSTRAINT program_url_key IF NOT EXISTS FOR (p:Program) REQUIRE (p.url, p.catalog_year) IS NODE KEY",
+        "CREATE CONSTRAINT req_group_key IF NOT EXISTS FOR (r:RequirementGroup) REQUIRE (r.name, r.program_url, r.catalog_year) IS NODE KEY",
+        "CREATE CONSTRAINT concentration_node_key IF NOT EXISTS FOR (c:Concentration) REQUIRE (c.name, c.program_url, c.catalog_year) IS NODE KEY",
+        "CREATE INDEX course_title_idx IF NOT EXISTS FOR (c:Course) ON (c.title)",
+        "CREATE INDEX program_name_idx IF NOT EXISTS FOR (p:Program) ON (p.name)"
     ]
     for q in queries:
         try:
@@ -395,7 +398,7 @@ def setup_schema(session):
 
 
 def load_to_neo4j(courses, schools, programs, catalog_year):
-    """Load extracted records, requirement groups, and relationships into Neo4j."""
+    """Load extracted records, concentrations, requirement groups, and relationships into Neo4j."""
     print(f"\n🔌 Connecting to Neo4j at {URI}...")
     driver = GraphDatabase.driver(URI, auth=(USER, PWD))
     driver.verify_connectivity()
@@ -452,7 +455,7 @@ def load_to_neo4j(courses, schools, programs, catalog_year):
         for i in range(0, len(courses), batch_size):
             batch = courses[i:i + batch_size]
             session.run(course_query, batch=batch)
-            print(f"   - Loaded courses {i + 1} to {min(i + batch_size, len(courses))}")
+            print(f"  - Loaded courses {i + 1} to {min(i + batch_size, len(courses))}")
 
         # 5. Prerequisite Links
         print("\n🔗 Building PREREQUISITE_FOR relationships...")
@@ -480,12 +483,12 @@ def load_to_neo4j(courses, schools, programs, catalog_year):
             MATCH (lvl:Level {name: p.level})
             MATCH (pt:ProgramType {name: p.program_type})
             MERGE (prog:Program {url: p.url, catalog_year: p.catalog_year})
-            SET prog.name           = p.name,
-                prog.friendly_name  = p.friendly_name,
-                prog.level          = p.level,
-                prog.program_type   = p.program_type,
+            SET prog.name = p.name,
+                prog.friendly_name = p.friendly_name,
+                prog.level = p.level,
+                prog.program_type = p.program_type,
                 prog.subject_prefix = p.subject_prefix,
-                prog.content_owner  = p.content_owner
+                prog.content_owner = p.content_owner
             MERGE (prog)-[:HAS_LEVEL]->(lvl)
             MERGE (prog)-[:HAS_TYPE]->(pt)
             MERGE (prog)-[:VALID_IN]->(cy)
@@ -494,9 +497,10 @@ def load_to_neo4j(courses, schools, programs, catalog_year):
             batch = programs[i:i + batch_size]
             session.run(prog_query, batch=batch)
 
-        # 7. Requirement Groups & Course Links (Parsed directly from XML HTML)
-        print(f"\n📋 Linking Requirement Groups and Course Requirements...")
+        # 7. Requirement Groups & Concentrations
+        print(f"\n📋 Linking Concentrations, Requirement Groups, and Course Requirements...")
         rg_count = 0
+        con_count = 0
         req_link_count = 0
 
         for prog in programs:
@@ -508,20 +512,47 @@ def load_to_neo4j(courses, schools, programs, catalog_year):
                     continue
 
                 min_credits = rg.get('min_credits', '')
+                is_con = rg.get('is_concentration', False)
 
-                session.run("""
-                    MATCH (p:Program {url: $prog_url, catalog_year: $catalog_year})
-                    MERGE (rg:RequirementGroup {
-                        name: $rg_name,
-                        program_url: $prog_url,
-                        catalog_year: $catalog_year
-                    })
-                    ON CREATE SET rg.min_credits = $min_credits
-                    ON MATCH  SET rg.min_credits = $min_credits
-                    MERGE (p)-[:HAS_REQUIREMENT_GROUP]->(rg)
-                """, prog_url=prog_url, catalog_year=catalog_year, rg_name=rg_name, min_credits=min_credits)
+                if is_con:
+                    # Ingest Concentration node linked to Program
+                    session.run("""
+                        MATCH (p:Program {url: $prog_url, catalog_year: $catalog_year})
+                        MERGE (con:Concentration {
+                            name: $rg_name,
+                            program_url: $prog_url,
+                            catalog_year: $catalog_year
+                        })
+                        MERGE (p)-[:HAS_CONCENTRATION]->(con)
+                        MERGE (rg:RequirementGroup {
+                            name: $rg_name,
+                            program_url: $prog_url,
+                            catalog_year: $catalog_year
+                        })
+                        ON CREATE SET rg.min_credits = $min_credits
+                        ON MATCH SET rg.min_credits = $min_credits
+                        MERGE (con)-[:HAS_REQUIREMENT_GROUP]->(rg)
+                    """, prog_url=prog_url, catalog_year=catalog_year,
+                         rg_name=rg_name, min_credits=min_credits)
+                    con_count += 1
+                else:
+                    # Base Program RequirementGroup
+                    session.run("""
+                        MATCH (p:Program {url: $prog_url, catalog_year: $catalog_year})
+                        MERGE (rg:RequirementGroup {
+                            name: $rg_name,
+                            program_url: $prog_url,
+                            catalog_year: $catalog_year
+                        })
+                        ON CREATE SET rg.min_credits = $min_credits
+                        ON MATCH SET rg.min_credits = $min_credits
+                        MERGE (p)-[:HAS_REQUIREMENT_GROUP]->(rg)
+                    """, prog_url=prog_url, catalog_year=catalog_year,
+                         rg_name=rg_name, min_credits=min_credits)
+
                 rg_count += 1
 
+                # Link courses to RequirementGroup
                 for item in courses_in_group:
                     session.run("""
                         MATCH (rg:RequirementGroup {
@@ -531,9 +562,11 @@ def load_to_neo4j(courses, schools, programs, catalog_year):
                         })
                         MATCH (c:Course {code: $code, catalog_year: $catalog_year})
                         MERGE (rg)-[:REQUIRES_COURSE]->(c)
-                    """, rg_name=rg_name, prog_url=prog_url, catalog_year=catalog_year, code=item['code'])
+                    """, rg_name=rg_name, prog_url=prog_url,
+                         catalog_year=catalog_year, code=item['code'])
                     req_link_count += 1
 
+        print(f"  ✅ Created {con_count} Concentrations")
         print(f"  ✅ Created {rg_count} RequirementGroups")
         print(f"  ✅ Created {req_link_count} REQUIRES_COURSE relationships")
 
